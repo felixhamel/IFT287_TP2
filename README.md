@@ -21,6 +21,10 @@ git clone https://github.com/alexblais/IFT287_TP2.git
 cd IFT287_TP2
 ```
 
+Assistance utilisation Git
+--------------
+http://rogerdudler.github.io/git-guide/
+
 License
 ----
 
