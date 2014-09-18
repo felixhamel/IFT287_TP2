@@ -8,6 +8,10 @@ Travail pratique #2 présenté par :
   - Félix Hamel
   - Tommy Lepage-Méthot
 
+Énoncé
+--------------
+http://ift287-dpm.espaceweb.usherbrooke.ca/travauxPratiques/TP2/TP2.pdf
+
 Version
 ----
 
