@@ -93,12 +93,12 @@ public class InventoryManager
 		// Create player
 		String cle = splitedInformations[0];
 		String nomJoueur = splitedInformations[1];
-		int cardNumber = Integer.parseInt(splitedInformations[2]);
+		int numberOfCards = Integer.parseInt(splitedInformations[2]);
 		
 		Joueur player = new Joueur(cle, nomJoueur);
 		
 		// Create cards
-		for(int i = 0; i < cardNumber; ++i) {
+		for(int i = 0; i < numberOfCards; ++i) {
 			String cardTitle = splitedInformations[3+(3*i)];
 			String teamName = splitedInformations[4+(3*i)];
 			int cardYear = Integer.parseInt(splitedInformations[5+(3*i)]);
