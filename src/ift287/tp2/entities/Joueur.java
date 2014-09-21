@@ -102,14 +102,14 @@ public class Joueur
 		StringBuffer buffer = new StringBuffer();
 		
 		// Put useful informations
-		buffer.append("\"" + this.cle + "\";");
-		buffer.append("\"" + this.nomJoueur + "\";");
+		buffer.append(this.cle + ";");
+		buffer.append(this.nomJoueur + ";");
 		buffer.append(this.cards.size() + ";");
 		
 		// Print all the cards
 		for(Carte card : cards) {
-			buffer.append("\"" + card.getTitreCarte() + "\";");
-			buffer.append("\"" + card.getNomEquipe() + "\";");
+			buffer.append(card.getTitreCarte() + ";");
+			buffer.append(card.getNomEquipe() + ";");
 			buffer.append(card.getAnneeSortie() + ";");
 		}
 		

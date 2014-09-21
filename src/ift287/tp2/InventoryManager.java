@@ -16,11 +16,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.common.base.Strings;
 
 public class InventoryManager 
 {
+	private static Logger logger = Logger.getLogger("InventoryManager");
 	private ArrayList<Joueur> players = new ArrayList<Joueur>();
 	private File storageFile;
 	
@@ -32,8 +36,23 @@ public class InventoryManager
 	 * @throws FailedToCreateStorageFileException 
 	 * @throws FailedToReadStorageException 
 	 */
-	public InventoryManager(String storageFileNameWithoutExtention) throws InvalidStorageFileNameException, FailedToCreateStorageFileException, FailedToReadStorageException 
+	public InventoryManager(String storageFileNameWithoutExtention, boolean debugLog) 
+			throws InvalidStorageFileNameException, 
+				   FailedToCreateStorageFileException, 
+				   FailedToReadStorageException 
 	{
+		// Setup logger
+		ConsoleHandler handler = new ConsoleHandler();
+		if(debugLog) {
+			handler.setLevel(Level.FINEST);
+			logger.setLevel(Level.FINEST);
+			logger.addHandler(handler);
+		} else {
+			handler.setLevel(Level.INFO);
+			logger.setLevel(Level.INFO);
+			logger.addHandler(handler);
+		}
+		
 		// Make sure the name given is valid
 		if(Strings.isNullOrEmpty(storageFileNameWithoutExtention)) {
 			throw new InvalidStorageFileNameException(storageFileNameWithoutExtention);
@@ -50,6 +69,8 @@ public class InventoryManager
 		} else {
 			loadPlayersFromStorage();
 		}
+		
+		// Show user menu and do what he ask for with the given options
 		showMenu();
 	}
 	
@@ -59,23 +80,24 @@ public class InventoryManager
 	 */
 	private void loadPlayersFromStorage() throws FailedToReadStorageException 
 	{
+		logger.fine(String.format("Loading players and card from storage at '%s'.", storageFile.getName()));
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(storageFile));
 			String line;
 			while((line = reader.readLine()) != null) {
-				// Decode line
 				if(line.length() > 0) {
 					createPlayerFromLineInStorage(line);
 				}
 			}
 		} catch(IOException | InvalidParameterException e) {
+			logger.severe("Failed to read storage. " + e.getMessage());
 			throw new FailedToReadStorageException(storageFile.getName(), e);			
 		} finally {
 			try {
 			reader.close();
 			} catch(IOException e) {
-				// We don't care !
+				logger.severe("Failed to close FileReader. " + e.getMessage());
 			}
 		}
 	}
@@ -89,6 +111,7 @@ public class InventoryManager
 	private void createPlayerFromLineInStorage(String line) throws InvalidParameterException
 	{
 		String[] splitedInformations = line.split(";");
+		logger.fine("Read line : " + line);
 		
 		// Create player
 		String cle = splitedInformations[0];
@@ -102,7 +125,9 @@ public class InventoryManager
 			String cardTitle = splitedInformations[3+(3*i)];
 			String teamName = splitedInformations[4+(3*i)];
 			int cardYear = Integer.parseInt(splitedInformations[5+(3*i)]);
+			
 			Carte card = new Carte(cardTitle, teamName, cardYear);
+			player.addCarte(card);
 		}
 		
 		players.add(player);
@@ -121,12 +146,13 @@ public class InventoryManager
 				writer.append(player.toString() + "\n");
 			}
 		} catch(IOException e) {
+			logger.severe("Failed to save inventory to storage. " + e.getMessage());
 			throw new FailedToSaveInventoryException(storageFile.getName(), e);
 		} finally {
 			try {
 			writer.close();
 			} catch(IOException e) {
-				// Do nothing, we don't care.
+				logger.severe("Failed to close FileWriter." + e.getMessage());
 			}
 		}
 	}
@@ -136,6 +162,6 @@ public class InventoryManager
 	 */
 	public void showMenu() 
 	{
-		
+		// TODO
 	}
 }
