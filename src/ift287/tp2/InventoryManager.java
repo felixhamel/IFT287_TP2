@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -26,6 +26,7 @@ public class InventoryManager
 {
 	private static Logger logger = Logger.getLogger("InventoryManager");
 	private ArrayList<Joueur> players = new ArrayList<Joueur>();
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	private File storageFile;
 	
 	/**
@@ -114,17 +115,17 @@ public class InventoryManager
 		logger.fine("Read line : " + line);
 		
 		// Create player
-		String cle = splitedInformations[0];
-		String nomJoueur = splitedInformations[1];
-		int numberOfCards = Integer.parseInt(splitedInformations[2]);
+		String cle = splitedInformations[0].replace("\"", "");
+		String nomJoueur = splitedInformations[1].replace("\"", "");
+		int numberOfCards = Integer.parseInt(splitedInformations[2].replace("\"", ""));
 		
 		Joueur player = new Joueur(cle, nomJoueur);
 		
 		// Create cards
 		for(int i = 0; i < numberOfCards; ++i) {
-			String cardTitle = splitedInformations[3+(3*i)];
-			String teamName = splitedInformations[4+(3*i)];
-			int cardYear = Integer.parseInt(splitedInformations[5+(3*i)]);
+			String cardTitle = splitedInformations[3+(3*i)].replace("\"", "");
+			String teamName = splitedInformations[4+(3*i)].replace("\"", "");
+			int cardYear = Integer.parseInt(splitedInformations[5+(3*i)].replace("\"", ""));
 			
 			Carte card = new Carte(cardTitle, teamName, cardYear);
 			player.addCarte(card);
@@ -162,6 +163,272 @@ public class InventoryManager
 	 */
 	public void showMenu() 
 	{
-		// TODO
+		int i = 1;
+		while (i != 0){
+			System.out.println("Application de gestion de cartes de baseball");
+			System.out.println(" ");
+			System.out.println("Voici la liste d'opérations valides :");
+			System.out.println("1. Ajouter un joueur");
+			System.out.println("2. Afficher l'information d'un joueur");
+			System.out.println("3. Mise à jour de l'information d'un joueur");
+			System.out.println("4. Effacer l'information d'un joueur");
+			System.out.println("5. Liste des joueurs");
+			System.out.println("6. Sauvegarde");
+			System.out.println(" ");
+			System.out.println("0. Sortir");
+			System.out.print("Votre sélection :");
+			try{
+	            i = Integer.parseInt(br.readLine());
+	        }catch(NumberFormatException nfe){
+	            System.err.println("Invalid Format!");
+	        } catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			redirectToOption(i);
+		}
+		exit();
+	}
+	/**
+	 * Redirect to a function depending on the number of the option chosen.
+	 * 
+	 * @param option - Number of the option chosen by the user
+	 */
+	public void redirectToOption(int option)
+	{
+		switch (option){
+		case 1:
+			addPlayer();
+			break;
+		case 2:
+			showPlayer();
+			break;
+		case 3:
+			updatePlayer();
+			break;
+		case 4:
+			deletePlayerInfo();
+			break;
+		case 5:
+			showPlayerList();
+			break;
+		case 6:
+			save();
+			break;
+		default:
+		}
+		pauseProg();
+	}
+	
+	/**
+	 * Creates a player and adds him to the player array
+	 * 
+	 */
+	private void addPlayer(){
+		String cle = "";
+		Joueur joueur;
+		String nomJoueur = "";
+		int nbrCartes = 0;
+		
+		
+		System.out.println("Option sélectionnée : 1. Ajouter un joueur");
+		System.out.println(" ");
+		System.out.println("Entrez la clé d'identification du joueur :");
+		
+		try{
+            cle = br.readLine();
+            System.out.println("Entrez le nom du joueur :");
+            nomJoueur = br.readLine();
+            
+            joueur = new Joueur(cle, nomJoueur);
+            players.add(joueur);
+            
+            System.out.println("Combien de cartes? :");
+            nbrCartes =  Integer.parseInt(br.readLine());
+            
+            addCards(nbrCartes, joueur);
+            
+            System.out.println("L'enregistrement du joueur a réussi.");
+        }catch(NumberFormatException nfe){
+            System.err.println("Invalid Format!");
+        } catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * Asks the user the informations of the cards and adds them to the player.
+	 * 
+	 * @param nbrCartes - the number of cards the user wants to add.
+	 * @param joueur - the player that the user wants to add cards to.
+	 */
+	private void addCards(int nbrCartes, Joueur joueur){
+		String titreCarte = "";
+		String equipeCarte = "";
+		int anneeCarte = 0;
+		try{
+			for (int i = 0; i < nbrCartes; i++){
+				int num = i+1;
+	        	System.out.println("Entrez le titre de la carte " + num + " :");
+	            titreCarte = br.readLine();
+	        	
+	        	System.out.println("Entrez l’équipe de la carte " + num + " :");
+	            equipeCarte = br.readLine();
+	        	
+	        	System.out.println("Entrez l’année de parution de la carte " + num + " :");
+	            anneeCarte = Integer.parseInt(br.readLine());
+	        	joueur.addCarte(new Carte(titreCarte, equipeCarte, anneeCarte));
+	        } 
+		}catch(NumberFormatException nfe){
+            System.err.println("Invalid Format!");
+        } catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	/**
+	 * Shows the player.
+	 * 
+	 */
+	private void showPlayer() {
+
+		System.out.println("Option sélectionné: 2. Afficher l'information d'un joueur");
+		
+		showInfoPlayer();
+	}
+	/**
+	 * Shows the information of the player chosen by the user.
+	 * 
+	 */
+	private int showInfoPlayer(){
+		String cle = "";
+		int position = 0;
+		
+		System.out.println(" ");
+		System.out.println("Entrez la clé d'identification du joueur:");
+		
+		try{
+            cle = br.readLine();
+            for(position = 0; position < players.size(); position++){
+            	if(players.get(position).getCle().equals(cle)){
+            		break;
+            	}
+            }
+           if(position == players.size()){
+        	   System.out.println("Le joueur n'existe pas");
+           }
+           else{
+        	   System.out.println("Voici l'information sauvegardé de: " + players.get(position).getNomJoueur());
+        	   int nbrCartes = players.get(position).getNombreCartes();
+        	   System.out.println("Le joueur a " + nbrCartes + " cartes enregistrées");
+        	   
+        	   ArrayList<Carte> cartes = players.get(position).getCartes();
+        	   for (int j = 0; j < nbrCartes; j++){
+        		   int num = j+1;
+        		System.out.println("Carte " + num + " :");
+               	System.out.println("Titre : " + cartes.get(j).getTitreCarte());
+               	System.out.println("Équipe : " + cartes.get(j).getNomEquipe());
+               	System.out.println("Année de parution :  " + cartes.get(j).getAnneeSortie());
+               } 
+           } 
+        } catch (IOException e) {
+			e.printStackTrace();
+		} 
+		return position;
+	}
+	/**
+	 * Updates the information of the player that the user chose,.
+	 * 
+	 */
+	private void updatePlayer(){
+		int nbrCartes = 0;
+		int position = 0;
+		String nomJoueur = "";
+		
+		System.out.println("Option sélectionné: 3. Mise à jour de l'information d'un joueur");
+		
+		position = showInfoPlayer();
+		
+		try{
+			if(position != players.size()){
+				System.out.println(" ");
+				System.out.println("Maintenant entrée les données à modifier:");
+	          	System.out.println("Entrez le nom du joueur:");
+	          	nomJoueur = br.readLine();
+	          	players.get(position).setNomJoueur(nomJoueur);
+	          	System.out.println("Combien de cartes:");
+	          	nbrCartes =  Integer.parseInt(br.readLine());
+	
+	          	addCards(nbrCartes, players.get(position));
+			}
+		}catch(NumberFormatException nfe){
+            System.err.println("Invalid Format!");
+        } catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+		} 
+	}
+	/**
+	 * Deletes the information of the player and the player himself that the user chose.
+	 * 
+	 */
+	private void deletePlayerInfo(){
+		int position = 0;
+		String reponse ="";
+		
+		System.out.println("Option sélectionné: 4. Effacer l'information d'un joueur");
+		
+		position = showInfoPlayer();
+		
+		try{
+			if(position != players.size()){
+	           System.out.println("Voulez vous effacer l'information de ce joueur ? (O/N)");
+	           reponse =  br.readLine();
+	           if (reponse.equals("O") || reponse.equals("o")){
+	        	   players.remove(position);
+	        	   System.out.println("L'information du joueur " + players.get(position).getNomJoueur() + " a été efface du système.");
+	           }
+	           else {
+	        	   System.out.println("L'information du joueur " + players.get(position).getNomJoueur() + " n'a pas été efface du système.");
+	           }
+			}
+		}catch(NumberFormatException nfe){
+            System.err.println("Invalid Format!");
+        } catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
+	/**
+	*@TODO
+	*/
+	private void showPlayerList(){
+		
+	}
+	/**
+	*@TODO
+	*/
+	private void save(){
+		
+	}
+	/**
+	*@TODO
+	*/
+	private void exit(){
+		
+	}
+
+	public static void pauseProg(){
+		System.out.println("Press enter to continue...");
+		try {
+			br.readLine();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 }

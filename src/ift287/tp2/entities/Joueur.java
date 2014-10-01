@@ -115,5 +115,4 @@ public class Joueur
 		
 		return buffer.toString();
 	}
-	
 }
