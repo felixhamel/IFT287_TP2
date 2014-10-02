@@ -97,20 +97,20 @@ public class Joueur
 	/**
 	 * Data structure that we want to put into the file storage.
 	 */
-	public String toString()
+	public String toCSVEntryFormat()
 	{
 		StringBuffer buffer = new StringBuffer();
 		
 		// Put useful informations
-		buffer.append(this.cle + ";");
-		buffer.append(this.nomJoueur + ";");
-		buffer.append(this.cards.size() + ";");
+		buffer.append("\"" + this.cle + "\";");
+		buffer.append("\"" + this.nomJoueur + "\";");
+		buffer.append("\"" + this.cards.size() + "\";");
 		
 		// Print all the cards
 		for(Carte card : cards) {
-			buffer.append(card.getTitreCarte() + ";");
-			buffer.append(card.getNomEquipe() + ";");
-			buffer.append(card.getAnneeSortie() + ";");
+			buffer.append("\"" + card.getTitreCarte() + "\";");
+			buffer.append("\"" + card.getNomEquipe() + "\";");
+			buffer.append("\"" + card.getAnneeSortie() + "\";");
 		}
 		
 		return buffer.toString();
