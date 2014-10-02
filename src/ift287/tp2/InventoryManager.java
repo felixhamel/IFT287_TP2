@@ -411,6 +411,7 @@ public class InventoryManager
 	private void showPlayerList(){
 		
 		String reponse = "";
+		File oldStorageFile = storageFile;
 		
 		System.out.println("Option sélectionné: 5. Liste de joueurs \n");
 		System.out.println("Voulez-vous creer la liste des joueurs dans un fichier ou l'afficher sur l'ecran ? (F/E): ");
@@ -440,13 +441,13 @@ public class InventoryManager
 				try{
 				System.out.println("Entrez le nom du fichier : ");
 				reponse = br.readLine();
-				
 				storageFile = new File(reponse);
 				if(!storageFile.exists()){
 					storageFile.createNewFile();
 				}
 				savePlayersToStorage();
 				System.out.println("Liste des joueurs à l'endroit suivant : " + storageFile.getPath());
+				storageFile = oldStorageFile;
 				}
 				catch (FailedToSaveInventoryException e)
 				{
