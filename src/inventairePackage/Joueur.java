@@ -21,7 +21,7 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Get the username of the player.
 	 * 
-	 * @return String - Username of the player.
+	 * @return String Username of the player.
 	 */
 	public String getCle()
 	{
@@ -31,8 +31,8 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Set the username of the player.
 	 * 
-	 * @param String
-	 *            - username of the player.
+	 * @param cle
+	 *            username of the player.
 	 * @throws InvalidParameterException
 	 */
 	public void setCle(String cle) throws InvalidParameterException
@@ -46,7 +46,7 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Get name of the player.
 	 * 
-	 * @return String - Name of the player.
+	 * @return String Name of the player.
 	 */
 	public final String getNomJoueur()
 	{
@@ -57,7 +57,7 @@ public class Joueur implements Comparable<Joueur>
 	 * Set the name of the player.
 	 * 
 	 * @param nomJoueur
-	 *            - Name of the player.
+	 *            Name of the player.
 	 * @throws InvalidParameterException
 	 */
 	public void setNomJoueur(String nomJoueur) throws InvalidParameterException
@@ -71,7 +71,7 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Get the number of cards this player have.
 	 * 
-	 * @return int - Number of cards.
+	 * @return int Number of cards.
 	 */
 	public int getNombreCartes()
 	{
@@ -82,7 +82,7 @@ public class Joueur implements Comparable<Joueur>
 	 * Add a new card.
 	 * 
 	 * @param card
-	 *            - The new card.
+	 *            The new card.
 	 * @throws InvalidParameterException
 	 *             If the card is null, throw an exception.
 	 */
@@ -99,7 +99,7 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Get all the cards for this player.
 	 * 
-	 * @return ArrayList<Carte> - All the cards for this player.
+	 * @return ArrayList<Carte> All the cards for this player.
 	 */
 	public final ArrayList<Carte> getCartes()
 	{
@@ -109,7 +109,7 @@ public class Joueur implements Comparable<Joueur>
 	/**
 	 * Data structure that we want to put into the file storage.
 	 * 
-	 * @return String - CSV representation of the player and it cards.
+	 * @return String CSV representation of the player and it cards.
 	 */
 	public String toCSVEntryFormat()
 	{

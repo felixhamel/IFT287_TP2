@@ -32,7 +32,7 @@ public class Carte implements Comparable<Carte>
 	 * Set the title of the card.
 	 * 
 	 * @param titreCarte
-	 *            - Title of the card.
+	 *            Title of the card.
 	 * @throws InvalidParameterException
 	 */
 	public void setTitreCarte(String titreCarte) throws InvalidParameterException
@@ -46,7 +46,7 @@ public class Carte implements Comparable<Carte>
 	/**
 	 * Get the name of the team the player is in in the year.
 	 * 
-	 * @return String - Name of the team the player was in during the year.
+	 * @return String Name of the team the player was in during the year.
 	 */
 	public final String getNomEquipe()
 	{
@@ -57,7 +57,7 @@ public class Carte implements Comparable<Carte>
 	 * Set the name of the team the player was in on that year.
 	 * 
 	 * @param nomEquipe
-	 *            - Name of the team.
+	 *            Name of the team.
 	 * @throws InvalidParameterException
 	 */
 	public void setNomEquipe(String nomEquipe) throws InvalidParameterException
@@ -71,7 +71,7 @@ public class Carte implements Comparable<Carte>
 	/**
 	 * Get the year for this card.
 	 * 
-	 * @return int - Year when this card was published.
+	 * @return int Year when this card was published.
 	 */
 	public final int getAnneeSortie()
 	{
@@ -82,9 +82,9 @@ public class Carte implements Comparable<Carte>
 	 * Set the year of the card.
 	 * 
 	 * @param anneeSortie
-	 *            - Year of the card.
+	 *             Year of the card.
 	 * @throws InvalidParameterException
-	 *             - Given year is lower than 0.
+	 *             Given year is lower than 0.
 	 */
 	public void setAnneeSortie(int anneeSortie) throws InvalidParameterException
 	{

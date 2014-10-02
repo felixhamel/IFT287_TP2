@@ -28,7 +28,7 @@ public class Inventaire
 	 * Constructor.
 	 * 
 	 * @param storageFileNameWithoutExtention
-	 *            - Name of the file without extension.
+	 *            Name of the file without extension.
 	 * @throws InvalidStorageFileNameException
 	 * @throws FailedToCreateStorageFileException
 	 * @throws FailedToReadStorageException
@@ -94,8 +94,7 @@ public class Inventaire
 	 * Create a new player and it cards from a line in the storage.
 	 * 
 	 * @param line
-	 *            - Line readed in the storage.
-	 * @return Joueur - Created player
+	 *            Line readed in the storage.
 	 * @throws InvalidParameterException
 	 */
 	private void createPlayerFromLineInStorage(String line) throws InvalidParameterException
@@ -127,7 +126,7 @@ public class Inventaire
 	 * Save all the players and their cards to the storage file.
 	 * 
 	 * @throws FailedToSaveInventoryException
-	 *             - Failed to create the storage file, failed to write to file or anything else related to IO.
+	 *             Failed to create the storage file, failed to write to file or anything else related to IO.
 	 */
 	private void savePlayersToStorage() throws FailedToSaveInventoryException
 	{
@@ -185,7 +184,7 @@ public class Inventaire
 	 * Redirect to a function depending on the number of the option chosen.
 	 * 
 	 * @param option
-	 *            - Number of the option chosen by the user
+	 *            Number of the option chosen by the user
 	 */
 	public void redirectToOption(int option)
 	{
@@ -256,9 +255,9 @@ public class Inventaire
 	 * Asks the user the informations of the cards and adds them to the player.
 	 * 
 	 * @param nbrCartes
-	 *            - the number of cards the user wants to add.
+	 *            the number of cards the user wants to add.
 	 * @param joueur
-	 *            - the player that the user wants to add cards to.
+	 *            the player that the user wants to add cards to.
 	 */
 	private void addCards(int nbrCartes, Joueur joueur)
 	{
@@ -409,7 +408,7 @@ public class Inventaire
 	}
 
 	/**
-	 * 
+	 * Show the list with all the players.
 	 */
 	private void showPlayerList()
 	{
@@ -465,7 +464,7 @@ public class Inventaire
 	}
 
 	/**
-	 * 
+	 * Save the inventory to the storage.
 	 */
 	private void save()
 	{
@@ -477,6 +476,9 @@ public class Inventaire
 		}
 	}
 
+	/**
+	 * Save the inventory and quit the program.
+	 */
 	private void exit()
 	{
 		this.save();
@@ -484,13 +486,15 @@ public class Inventaire
 		System.exit(0);
 	}
 
+	/**
+	 * Used after each option in the menu. Help to prevent unwanted operations by the user.
+	 */
 	public static void pauseProg()
 	{
-		System.out.println("Veillez entre une touche pour continuer...");
+		System.out.println("Veuillez appuyer sur Entrée pour continuer...");
 		try {
 			inputBufferedReader.readLine();
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -498,10 +502,15 @@ public class Inventaire
 	/**
 	 * Main function.
 	 * 
-	 * @param args
-	 * @throws Exception
+	 * @param args	Program arguments (file)
+	 * @throws FailedToReadStorageException 
+	 * 					Failed to read the storage from file.
+	 * @throws FailedToCreateStorageFileException 
+	 * 					Failed to create the storage file at the wanted destination.
+	 * @throws InvalidStorageFileNameException 
+	 * 					Received invalid file storage name.
 	 */
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws MissingParameterException, InvalidStorageFileNameException, FailedToCreateStorageFileException, FailedToReadStorageException
 	{
 		// First parameter received is the name of the file we will use on the
 		// hard drive where this application is located
