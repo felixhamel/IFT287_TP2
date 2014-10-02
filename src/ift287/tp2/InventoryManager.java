@@ -249,7 +249,7 @@ public class InventoryManager
             addCards(nbrCartes, joueur);
             System.out.println("L'enregistrement du joueur a r�ussi.");
             
-        } catch(NumberFormatException nfe) {
+        }catch(NumberFormatException nfe){
             System.err.println("Invalid Format!");
         } catch (IOException e) {
 			e.printStackTrace();
@@ -405,9 +405,7 @@ public class InventoryManager
 			e.printStackTrace();
 		} 
 	}
-	/**
-	*@TODO
-	*/
+	
 	private void showPlayerList(){
 		
 		String reponse = "";
@@ -465,17 +463,21 @@ public class InventoryManager
 		
 		
 	}
-	/**
-	*@TODO
-	*/
+
 	private void save(){
-		
+		try {
+			this.savePlayersToStorage();
+			System.out.println("Le fichier " + this.storageFile.getName() + " a été créé avec succès.");
+		}
+		catch (FailedToSaveInventoryException e){
+			e.printStackTrace();
+		}
 	}
-	/**
-	*@TODO
-	*/
+	
 	private void exit(){
-		
+		this.save();
+		System.out.println("Merci d'avoir utilisé le système de gestion d'inventaire de cartes.");
+		System.exit(0);
 	}
 
 	public static void pauseProg(){
