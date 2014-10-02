@@ -1,6 +1,6 @@
-package ift287.tp2.exceptions;
+package inventairePackage.exceptions;
 
-public class FailedToCreateStorageFileException extends Exception 
+public class FailedToCreateStorageFileException extends Exception
 {
 	private static final long serialVersionUID = -6729426051685656218L;
 

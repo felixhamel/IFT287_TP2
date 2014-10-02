@@ -1,6 +1,6 @@
-package ift287.tp2.exceptions;
+package inventairePackage.exceptions;
 
-public class FailedToSaveInventoryException extends Exception 
+public class FailedToSaveInventoryException extends Exception
 {
 	private static final long serialVersionUID = -8855058480345733031L;
 

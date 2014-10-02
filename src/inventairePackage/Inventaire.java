@@ -1,12 +1,12 @@
-package ift287.tp2;
+package inventairePackage;
 
-import ift287.tp2.entities.Carte;
-import ift287.tp2.entities.Joueur;
-import ift287.tp2.exceptions.FailedToCreateStorageFileException;
-import ift287.tp2.exceptions.FailedToReadStorageException;
-import ift287.tp2.exceptions.FailedToSaveInventoryException;
-import ift287.tp2.exceptions.InvalidParameterException;
-import ift287.tp2.exceptions.InvalidStorageFileNameException;
+import inventairePackage.exceptions.FailedToCreateStorageFileException;
+import inventairePackage.exceptions.FailedToReadStorageException;
+import inventairePackage.exceptions.FailedToSaveInventoryException;
+import inventairePackage.exceptions.InvalidParameterException;
+import inventairePackage.exceptions.InvalidStorageFileNameException;
+import inventairePackage.exceptions.MissingParameterException;
+import inventairePackage.utils.Strings;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,14 +19,12 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.common.base.Strings;
-
-public class InventoryManager
+public class Inventaire
 {
-	private static Logger		logger	= Logger.getLogger("InventoryManager");
-	private ArrayList<Joueur>	players	= new ArrayList<Joueur>();
-	static BufferedReader		br		= new BufferedReader(new InputStreamReader(System.in));
-	private File				storageFile;
+	private static Logger logger = Logger.getLogger("InventoryManager");
+	private ArrayList<Joueur> players = new ArrayList<Joueur>();
+	private static BufferedReader inputBufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	private File storageFile;
 
 	/**
 	 * Constructor.
@@ -37,21 +35,11 @@ public class InventoryManager
 	 * @throws FailedToCreateStorageFileException
 	 * @throws FailedToReadStorageException
 	 */
-	public InventoryManager(String storageFileNameWithoutExtention, boolean debugLog) throws InvalidStorageFileNameException,
-			FailedToCreateStorageFileException, FailedToReadStorageException
+	public Inventaire(String storageFileNameWithoutExtention)
+			throws InvalidStorageFileNameException,
+				FailedToCreateStorageFileException,
+				FailedToReadStorageException
 	{
-		// Setup logger
-		ConsoleHandler handler = new ConsoleHandler();
-		if (debugLog) {
-			handler.setLevel(Level.FINEST);
-			logger.setLevel(Level.FINEST);
-			logger.addHandler(handler);
-		} else {
-			handler.setLevel(Level.INFO);
-			logger.setLevel(Level.INFO);
-			logger.addHandler(handler);
-		}
-
 		// Make sure the name given is valid
 		if (Strings.isNullOrEmpty(storageFileNameWithoutExtention)) {
 			throw new InvalidStorageFileNameException(storageFileNameWithoutExtention);
@@ -100,6 +88,8 @@ public class InventoryManager
 				logger.severe("Failed to close FileReader. " + e.getMessage());
 			}
 		}
+
+		players.sort(new JoueurComparateur());
 	}
 
 	/**
@@ -179,9 +169,9 @@ public class InventoryManager
 			System.out.println("6. Sauvegarde");
 			System.out.println(" ");
 			System.out.println("0. Sortir");
-			System.out.print("Votre sélection :");
+			System.out.print("Votre sélection : ");
 			try {
-				i = Integer.parseInt(br.readLine());
+				i = Integer.parseInt(inputBufferedReader.readLine());
 			} catch (NumberFormatException nfe) {
 				System.err.println("Invalid Format!");
 			} catch (IOException e) {
@@ -226,8 +216,7 @@ public class InventoryManager
 	}
 
 	/**
-	 * Creates a player and adds him to the player array
-	 * 
+	 * Creates a player and adds him to the players array.
 	 */
 	private void addPlayer()
 	{
@@ -241,15 +230,16 @@ public class InventoryManager
 		System.out.println("Entrez la clé d'identification du joueur :");
 
 		try {
-			cle = br.readLine();
+			cle = inputBufferedReader.readLine();
 			System.out.println("Entrez le nom du joueur :");
-			nomJoueur = br.readLine();
+			nomJoueur = inputBufferedReader.readLine();
 
 			joueur = new Joueur(cle, nomJoueur);
 			players.add(joueur);
+			players.sort(new JoueurComparateur());
 
 			System.out.println("Combien de cartes? :");
-			nbrCartes = Integer.parseInt(br.readLine());
+			nbrCartes = Integer.parseInt(inputBufferedReader.readLine());
 
 			addCards(nbrCartes, joueur);
 			System.out.println("L'enregistrement du joueur a réussi.");
@@ -277,17 +267,18 @@ public class InventoryManager
 		String titreCarte = "";
 		String equipeCarte = "";
 		int anneeCarte = 0;
+
 		try {
 			for (int i = 0; i < nbrCartes; i++) {
 				int num = i + 1;
 				System.out.println("Entrez le titre de la carte " + num + " :");
-				titreCarte = br.readLine();
+				titreCarte = inputBufferedReader.readLine();
 
 				System.out.println("Entrez l'équipe de la carte " + num + " :");
-				equipeCarte = br.readLine();
+				equipeCarte = inputBufferedReader.readLine();
 
 				System.out.println("Entrez l'année de parution de la carte " + num + " :");
-				anneeCarte = Integer.parseInt(br.readLine());
+				anneeCarte = Integer.parseInt(inputBufferedReader.readLine());
 				joueur.addCarte(new Carte(titreCarte, equipeCarte, anneeCarte));
 			}
 		} catch (NumberFormatException nfe) {
@@ -325,7 +316,7 @@ public class InventoryManager
 		System.out.println("Entrez la clé d'identification du joueur:");
 
 		try {
-			cle = br.readLine();
+			cle = inputBufferedReader.readLine();
 			for (position = 0; position < players.size(); position++) {
 				if (players.get(position).getCle().equals(cle)) {
 					break;
@@ -371,10 +362,10 @@ public class InventoryManager
 				System.out.println(" ");
 				System.out.println("Maintenant entrée les données à modifier:");
 				System.out.println("Entrez le nom du joueur:");
-				nomJoueur = br.readLine();
+				nomJoueur = inputBufferedReader.readLine();
 				players.get(position).setNomJoueur(nomJoueur);
 				System.out.println("Combien de cartes:");
-				nbrCartes = Integer.parseInt(br.readLine());
+				nbrCartes = Integer.parseInt(inputBufferedReader.readLine());
 
 				addCards(nbrCartes, players.get(position));
 			}
@@ -403,7 +394,7 @@ public class InventoryManager
 		try {
 			if (position != players.size()) {
 				System.out.println("Voulez vous effacer l'information de ce joueur ? (O/N)");
-				reponse = br.readLine();
+				reponse = inputBufferedReader.readLine();
 				nomJoueur = players.get(position).getNomJoueur();
 				if (reponse.equals("O") || reponse.equals("o")) {
 					players.remove(position);
@@ -431,7 +422,7 @@ public class InventoryManager
 		System.out.println("Voulez-vous creer la liste des joueurs dans un fichier ou l'afficher sur l'ecran ? (F/E): ");
 
 		try {
-			reponse = br.readLine();
+			reponse = inputBufferedReader.readLine();
 
 			switch (reponse) {
 				case "E":
@@ -453,7 +444,7 @@ public class InventoryManager
 				case "F":
 					try {
 						System.out.println("Entrez le nom du fichier : ");
-						reponse = br.readLine();
+						reponse = inputBufferedReader.readLine();
 						storageFile = new File(reponse);
 						if (!storageFile.exists()) {
 							storageFile.createNewFile();
@@ -497,12 +488,29 @@ public class InventoryManager
 
 	public static void pauseProg()
 	{
-		System.out.println("Press enter to continue...");
+		System.out.println("Veillez entre une touche pour continuer...");
 		try {
-			br.readLine();
+			inputBufferedReader.readLine();
 		} catch (IOException e) {
 
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Main function.
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
+	public static void main(String[] args) throws Exception
+	{
+		// First parameter received is the name of the file we will use on the
+		// hard drive where this application is located
+		if (args.length == 0) {
+			throw new MissingParameterException("file", "you must provide a file where to store informations about players and cards.");
+		} else {
+			new Inventaire(args[0]);
 		}
 	}
 }
