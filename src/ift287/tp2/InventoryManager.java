@@ -167,16 +167,16 @@ public class InventoryManager
 		while (i != 0){
 			System.out.println("Application de gestion de cartes de baseball");
 			System.out.println(" ");
-			System.out.println("Voici la liste d'opérations valides :");
+			System.out.println("Voici la liste d'opï¿½rations valides :");
 			System.out.println("1. Ajouter un joueur");
 			System.out.println("2. Afficher l'information d'un joueur");
-			System.out.println("3. Mise à jour de l'information d'un joueur");
+			System.out.println("3. Mise ï¿½ jour de l'information d'un joueur");
 			System.out.println("4. Effacer l'information d'un joueur");
 			System.out.println("5. Liste des joueurs");
 			System.out.println("6. Sauvegarde");
 			System.out.println(" ");
 			System.out.println("0. Sortir");
-			System.out.print("Votre sélection :");
+			System.out.print("Votre sï¿½lection :");
 			try{
 	            i = Integer.parseInt(br.readLine());
 	        }catch(NumberFormatException nfe){
@@ -224,18 +224,18 @@ public class InventoryManager
 	 * Creates a player and adds him to the player array
 	 * 
 	 */
-	private void addPlayer(){
+	private void addPlayer() 
+	{
 		String cle = "";
 		Joueur joueur;
 		String nomJoueur = "";
 		int nbrCartes = 0;
 		
-		
-		System.out.println("Option sélectionnée : 1. Ajouter un joueur");
+		System.out.println("Option sï¿½lectionnï¿½e : 1. Ajouter un joueur");
 		System.out.println(" ");
-		System.out.println("Entrez la clé d'identification du joueur :");
+		System.out.println("Entrez la clï¿½ d'identification du joueur :");
 		
-		try{
+		try {
             cle = br.readLine();
             System.out.println("Entrez le nom du joueur :");
             nomJoueur = br.readLine();
@@ -247,9 +247,9 @@ public class InventoryManager
             nbrCartes =  Integer.parseInt(br.readLine());
             
             addCards(nbrCartes, joueur);
+            System.out.println("L'enregistrement du joueur a rï¿½ussi.");
             
-            System.out.println("L'enregistrement du joueur a réussi.");
-        }catch(NumberFormatException nfe){
+        } catch(NumberFormatException nfe) {
             System.err.println("Invalid Format!");
         } catch (IOException e) {
 			e.printStackTrace();
@@ -274,10 +274,10 @@ public class InventoryManager
 	        	System.out.println("Entrez le titre de la carte " + num + " :");
 	            titreCarte = br.readLine();
 	        	
-	        	System.out.println("Entrez l’équipe de la carte " + num + " :");
+	        	System.out.println("Entrez lï¿½ï¿½quipe de la carte " + num + " :");
 	            equipeCarte = br.readLine();
 	        	
-	        	System.out.println("Entrez l’année de parution de la carte " + num + " :");
+	        	System.out.println("Entrez lï¿½annï¿½e de parution de la carte " + num + " :");
 	            anneeCarte = Integer.parseInt(br.readLine());
 	        	joueur.addCarte(new Carte(titreCarte, equipeCarte, anneeCarte));
 	        } 
@@ -296,7 +296,7 @@ public class InventoryManager
 	 */
 	private void showPlayer() {
 
-		System.out.println("Option sélectionné: 2. Afficher l'information d'un joueur");
+		System.out.println("Option sï¿½lectionnï¿½: 2. Afficher l'information d'un joueur");
 		
 		showInfoPlayer();
 	}
@@ -309,7 +309,7 @@ public class InventoryManager
 		int position = 0;
 		
 		System.out.println(" ");
-		System.out.println("Entrez la clé d'identification du joueur:");
+		System.out.println("Entrez la clï¿½ d'identification du joueur:");
 		
 		try{
             cle = br.readLine();
@@ -322,17 +322,17 @@ public class InventoryManager
         	   System.out.println("Le joueur n'existe pas");
            }
            else{
-        	   System.out.println("Voici l'information sauvegardé de: " + players.get(position).getNomJoueur());
+        	   System.out.println("Voici l'information sauvegardï¿½ de: " + players.get(position).getNomJoueur());
         	   int nbrCartes = players.get(position).getNombreCartes();
-        	   System.out.println("Le joueur a " + nbrCartes + " cartes enregistrées");
+        	   System.out.println("Le joueur a " + nbrCartes + " cartes enregistrï¿½es");
         	   
         	   ArrayList<Carte> cartes = players.get(position).getCartes();
         	   for (int j = 0; j < nbrCartes; j++){
         		   int num = j+1;
         		System.out.println("Carte " + num + " :");
                	System.out.println("Titre : " + cartes.get(j).getTitreCarte());
-               	System.out.println("Équipe : " + cartes.get(j).getNomEquipe());
-               	System.out.println("Année de parution :  " + cartes.get(j).getAnneeSortie());
+               	System.out.println("ï¿½quipe : " + cartes.get(j).getNomEquipe());
+               	System.out.println("Annï¿½e de parution :  " + cartes.get(j).getAnneeSortie());
                } 
            } 
         } catch (IOException e) {
@@ -349,14 +349,14 @@ public class InventoryManager
 		int position = 0;
 		String nomJoueur = "";
 		
-		System.out.println("Option sélectionné: 3. Mise à jour de l'information d'un joueur");
+		System.out.println("Option sï¿½lectionnï¿½: 3. Mise ï¿½ jour de l'information d'un joueur");
 		
 		position = showInfoPlayer();
 		
 		try{
 			if(position != players.size()){
 				System.out.println(" ");
-				System.out.println("Maintenant entrée les données à modifier:");
+				System.out.println("Maintenant entrï¿½e les donnï¿½es ï¿½ modifier:");
 	          	System.out.println("Entrez le nom du joueur:");
 	          	nomJoueur = br.readLine();
 	          	players.get(position).setNomJoueur(nomJoueur);
@@ -382,7 +382,7 @@ public class InventoryManager
 		String reponse ="";
 		String nomJoueur = "";
 		
-		System.out.println("Option sélectionné: 4. Effacer l'information d'un joueur");
+		System.out.println("Option sï¿½lectionnï¿½: 4. Effacer l'information d'un joueur");
 		
 		position = showInfoPlayer();
 		
@@ -393,10 +393,10 @@ public class InventoryManager
 	           nomJoueur = players.get(position).getNomJoueur();
 	           if (reponse.equals("O") || reponse.equals("o")){
 	        	   players.remove(position);
-	        	   System.out.println("L'information du joueur " + nomJoueur + " a été efface du système.");
+	        	   System.out.println("L'information du joueur " + nomJoueur + " a ï¿½tï¿½ efface du systï¿½me.");
 	           }
 	           else {
-	        	   System.out.println("L'information du joueur " + nomJoueur + " n'a pas été efface du système.");
+	        	   System.out.println("L'information du joueur " + nomJoueur + " n'a pas ï¿½tï¿½ efface du systï¿½me.");
 	           }
 			}
 		}catch(NumberFormatException nfe){
@@ -413,7 +413,7 @@ public class InventoryManager
 		String reponse = "";
 		File oldStorageFile = storageFile;
 		
-		System.out.println("Option sélectionné: 5. Liste de joueurs \n");
+		System.out.println("Option sï¿½lectionnï¿½: 5. Liste de joueurs \n");
 		System.out.println("Voulez-vous creer la liste des joueurs dans un fichier ou l'afficher sur l'ecran ? (F/E): ");
 		
 		try{
@@ -424,15 +424,15 @@ public class InventoryManager
 				for(Joueur j: players)
 				{
 					System.out.println("Joueur : " + j.getCle());
-					System.out.println("Voici l'information sauvegardé de : " + j.getNomJoueur());
-					System.out.println("Le joueur a " + j.getNombreCartes() + " cartes enregistrées");
+					System.out.println("Voici l'information sauvegardï¿½ de : " + j.getNomJoueur());
+					System.out.println("Le joueur a " + j.getNombreCartes() + " cartes enregistrï¿½es");
 					ArrayList<Carte> cartes = j.getCartes();
 					for (int i = 0; i < j.getNombreCartes(); i++){
 		        		   int num = i+1;
 		        		System.out.println("Carte " + num + " :");
 		               	System.out.println("Titre : " + cartes.get(i).getTitreCarte());
-		               	System.out.println("Équipe : " + cartes.get(i).getNomEquipe());
-		               	System.out.println("Année de parution :  " + cartes.get(i).getAnneeSortie());
+		               	System.out.println("ï¿½quipe : " + cartes.get(i).getNomEquipe());
+		               	System.out.println("Annï¿½e de parution :  " + cartes.get(i).getAnneeSortie());
 		               }
 					System.out.println("\n");
 				}
@@ -446,7 +446,7 @@ public class InventoryManager
 					storageFile.createNewFile();
 				}
 				savePlayersToStorage();
-				System.out.println("Liste des joueurs à l'endroit suivant : " + storageFile.getPath());
+				System.out.println("Liste des joueurs ï¿½ l'endroit suivant : " + storageFile.getPath());
 				storageFile = oldStorageFile;
 				}
 				catch (FailedToSaveInventoryException e)
@@ -455,7 +455,7 @@ public class InventoryManager
 				}
 				break;
 			default:
-				System.out.println("Choix invalide, veuillez entrée E ou F");
+				System.out.println("Choix invalide, veuillez entrï¿½e E ou F");
 				break;
 			}
 		}

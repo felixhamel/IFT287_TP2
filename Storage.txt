@@ -1,1 +1,4 @@
 "Yo";"Super Dude";1;"lalaala";"hohohoh";1998;
+"rodriquez1";"Alex Rodriguez";"2";"Rockie years";"Seattle, Mariners";"1994";”The magic years”;”New York, Yankees”; "2006";
+"jeter1";"Derek Jeter";"1";"The capitan";"New York, Yankees";"2006";
+"clemens1";"Roger Clemens";"2";"Rockie years";"Boston, Red Sox";"1984";"The Cy Young";"New York, Yankees";"2001";
