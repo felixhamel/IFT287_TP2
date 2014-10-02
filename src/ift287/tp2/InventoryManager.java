@@ -380,6 +380,7 @@ public class InventoryManager
 	private void deletePlayerInfo(){
 		int position = 0;
 		String reponse ="";
+		String nomJoueur = "";
 		
 		System.out.println("Option sélectionné: 4. Effacer l'information d'un joueur");
 		
@@ -389,12 +390,13 @@ public class InventoryManager
 			if(position != players.size()){
 	           System.out.println("Voulez vous effacer l'information de ce joueur ? (O/N)");
 	           reponse =  br.readLine();
+	           nomJoueur = players.get(position).getNomJoueur();
 	           if (reponse.equals("O") || reponse.equals("o")){
 	        	   players.remove(position);
-	        	   System.out.println("L'information du joueur " + players.get(position).getNomJoueur() + " a été efface du système.");
+	        	   System.out.println("L'information du joueur " + nomJoueur + " a été efface du système.");
 	           }
 	           else {
-	        	   System.out.println("L'information du joueur " + players.get(position).getNomJoueur() + " n'a pas été efface du système.");
+	        	   System.out.println("L'information du joueur " + nomJoueur + " n'a pas été efface du système.");
 	           }
 			}
 		}catch(NumberFormatException nfe){
