@@ -410,6 +410,59 @@ public class InventoryManager
 	*/
 	private void showPlayerList(){
 		
+		String reponse = "";
+		
+		System.out.println("Option sélectionné: 5. Liste de joueurs \n");
+		System.out.println("Voulez-vous creer la liste des joueurs dans un fichier ou l'afficher sur l'ecran ? (F/E): ");
+		
+		try{
+			reponse = br.readLine();
+			
+			switch(reponse){
+			case "E": 
+				for(Joueur j: players)
+				{
+					System.out.println("Joueur : " + j.getCle());
+					System.out.println("Voici l'information sauvegardé de : " + j.getNomJoueur());
+					System.out.println("Le joueur a " + j.getNombreCartes() + " cartes enregistrées");
+					ArrayList<Carte> cartes = j.getCartes();
+					for (int i = 0; i < j.getNombreCartes(); i++){
+		        		   int num = i+1;
+		        		System.out.println("Carte " + num + " :");
+		               	System.out.println("Titre : " + cartes.get(i).getTitreCarte());
+		               	System.out.println("Équipe : " + cartes.get(i).getNomEquipe());
+		               	System.out.println("Année de parution :  " + cartes.get(i).getAnneeSortie());
+		               }
+					System.out.println("\n");
+				}
+				break;
+			case "F":
+				try{
+				System.out.println("Entrez le nom du fichier : ");
+				reponse = br.readLine();
+				
+				storageFile = new File(reponse);
+				if(!storageFile.exists()){
+					storageFile.createNewFile();
+				}
+				savePlayersToStorage();
+				System.out.println("Liste des joueurs à l'endroit suivant : " + storageFile.getPath());
+				}
+				catch (FailedToSaveInventoryException e)
+				{
+					e.printStackTrace();
+				}
+				break;
+			default:
+				System.out.println("Choix invalide, veuillez entrée E ou F");
+				break;
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+		
+		
 	}
 	/**
 	*@TODO
